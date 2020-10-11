@@ -12,7 +12,6 @@
 }
 
 .custom-tooltip::before{
- border-color: var(--border-color);
  content: "";
  position: absolute;
  top: 30px;

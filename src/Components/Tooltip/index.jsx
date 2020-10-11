@@ -15,7 +15,7 @@ const Tooltip = ({ value = 0, end = 0, bubble_color = '', index}) => {
   }, [])
 
   const marginLeft = end - value
-  return <div data-attr={bubble_color} className={`custom-tooltip tip_${index}`} style={{ marginLeft: `${marginLeft}%`, background: bubble_color }}>
+  return <div className={`custom-tooltip tip_${index}`} style={{ marginLeft: `${marginLeft}%`, background: bubble_color }}>
     {value}
   </div>
 }
