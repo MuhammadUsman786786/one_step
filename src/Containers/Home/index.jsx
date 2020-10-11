@@ -1,6 +1,7 @@
 import './index.scss'
 import React from 'react'
 import moment from "moment";
+import CustomGoogleMap from "../../Components/CustomGoogleMap";
 
 const Logo = () => {
 	return <div className='d-flex py-3 justify-content-center'>
@@ -52,7 +53,14 @@ const Home = (props) => {
 				<StatisticsCard/>
 				<StatisticsCard/>
 				<StatisticsCard/>
-				<StatisticsCard/>
+				<div className='map_card mt-4 pb-0'>
+					<div className='header_title text-left pl-4 pt-2 pb-2'>Your Route</div>
+					<CustomGoogleMap/>
+				</div>
+			</div>
+			<div className='footer_container'>
+				<img src={ require('../../Images/app_store.png') } className='mr-1' alt='info'/>
+				<img src={ require('../../Images/play_store.png') } className='ml-1' alt='info'/>
 			</div>
 		</div>
 	</div>
