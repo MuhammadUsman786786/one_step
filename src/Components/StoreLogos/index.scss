@@ -1,0 +1,15 @@
+.store-logos{
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 15px;
+  display: flex;
+  margin-right: 15px;
+  flex-wrap: wrap;
+
+  img{
+    height: 70px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+}

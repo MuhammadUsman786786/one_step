@@ -1,59 +1,75 @@
-import './index.scss'
 import React from 'react'
-import moment from "moment";
+import { useState } from 'react'
+import { useEffect } from 'react'
+import { toast } from 'react-toastify'
 
-const Logo = () => {
-	return <div className='d-flex py-3 justify-content-center'>
-		<img src={ require('../../Images/logo.png') } className='logo_style' alt='logo'/>
-	</div>
-}
-
-const HeaderInfo = () => {
-	return <div className='container-fluid'>
-		<div className='row'>
-			<div className='col-12'>
-				<div className='header_title mt-3'>Walk summary</div>
-				<div className='time_style'>{ moment().format('dddd,MMMM DD, YYYY hh:mm a') }</div>
-			</div>
-		</div>
-		<div className='row mt-2'>
-			<div className='large_time_style col-6 pr-4 text-right vertical_divider '>
-				0:30 <sub className='sub_style'>sec</sub>
-			</div>
-			<div className='large_time_style col-6 pl-4 text-left'>
-				10 <sub className='sub_style'>Steps</sub></div>
-		</div>
-	</div>
-}
-
-const StatisticsCard = () => {
-	return <div className='container-fluid mt-4'>
-		<div className='card_item py-2 row px-0'>
-			<div className='col-5 vertical_divider px-2'>
-				<img src={ require('../../Images/info_icon.png') } className='info_icon d-block' alt='info'/>
-				<span className='title'>Step Rate</span>
-				<span className='subtitle'>8 steps per minute</span>
-			</div>
-			<div className='col-7 pl-2'>
-			</div>
-		</div>
-	</div>
-}
+import { CustomGoogleMap, Logo, HeaderInfo, StatisticsCard, StoreLogos } from '../../Components'
+import { Splash } from '..'
+import { SAMPLE_DATA_URL, INSIGHT } from '../../Utilities/constants'
 
 const Home = (props) => {
+
+	const [showSplash, setSplash] = useState(true)
+	const [response, setResponse] = useState({})
+	const [error, setError] = useState(null)
+
+	useEffect(() => {
+		setTimeout(() => {
+			fetch(SAMPLE_DATA_URL, {
+				headers: {
+					'Content-Type': 'application/json',
+				}
+			})
+				.then(res => res.json())
+				.then((result) => {
+					setResponse(result)
+					setSplash(false)
+				},
+					({ message = '' }) => {
+						setError(message)
+					}
+				)
+		}, 1000)
+	}, [])
+
+
+	if (error) {
+		toast.error(error)
+	}
+
+	if (showSplash) {
+		return <Splash />
+	}
+
 	return <div className='home_container'>
-		<Logo/>
+		<Logo />
+		<div className='divider_style' />
 		<div className='body_container'>
-			<div className='divider_style'/>
-			<HeaderInfo/>
+			<HeaderInfo
+				time={response?.summary?.seconds}
+				steps={response?.summary?.steps}
+			/>
 			<div className='px-3'>
-				<StatisticsCard/>
-				<StatisticsCard/>
-				<StatisticsCard/>
-				<StatisticsCard/>
-				<StatisticsCard/>
-				<StatisticsCard/>
+				{response?.summary?.cards?.map((item, index) => {
+					return <StatisticsCard
+						key={`${item?.title}-${index}`}
+						{...item}
+						index={index}
+					/>
+				})}
+				<StatisticsCard
+					icon={require('../../Images/idea.png')}
+					title={INSIGHT.TITLE}
+					description={INSIGHT.DESCRIPTION}
+				/>
+				<CustomGoogleMap
+					defaultCenter={{ lat: 33.684422, lng: 73.047882 }}
+					defaultZoom={10}
+				>
+					{/* pass markers|directions|clusters as children */}
+				</CustomGoogleMap>
 			</div>
+			<StoreLogos />
 		</div>
 	</div>
 }

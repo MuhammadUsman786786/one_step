@@ -7,13 +7,17 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "bootstrap": "^4.5.2",
+    "html-react-parser": "^0.14.0",
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
     "normalize.css": "^8.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-google-maps": "^9.4.5",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "react-toastify": "^6.0.9",
+    "recompose": "^0.30.0"
   },
   "scripts": {
     "start": "react-scripts start",

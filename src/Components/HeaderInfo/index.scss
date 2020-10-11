@@ -1,0 +1,27 @@
+
+.header_title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  color: $regular_color;
+}
+
+.time_style {
+  font-size: 0.9rem;
+  text-align: center;
+  font-weight: 500;
+  color: $regular_color;
+}
+
+.large_time_style {
+  font-size: 1.7rem;
+  font-weight: bold;
+  color: $regular_color;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.sub_style {
+  font-size: 0.9rem;
+  display: inline-block;
+}

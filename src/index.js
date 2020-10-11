@@ -1,14 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ToastContainer } from 'react-toastify';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './index.css';
+import 'react-toastify/dist/ReactToastify.css';
+
 import App from './App';
+import './index.scss';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-	<React.StrictMode>
+	<React.Fragment>
 		<App/>
-	</React.StrictMode>,
+		<ToastContainer
+      position="top-left"
+      autoClose={3000}
+      hideProgressBar
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnVisibilityChange
+      draggable
+      pauseOnHover
+    />
+	</React.Fragment>,
 	document.getElementById('root')
 );
 
