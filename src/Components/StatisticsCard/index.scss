@@ -1,5 +1,5 @@
 .card_item {
- @extend .card-style;
+  @extend .card-style;
 
   .title {
     display: block;
@@ -20,13 +20,13 @@
     font-weight: 500;
   }
 
-  .icon{
+  .icon {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    img{
+    img {
       height: 80px;
     }
   }

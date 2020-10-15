@@ -11,7 +11,7 @@ const StatisticsCard = ({ title = '', description = '', rainbow = {}, icon = '',
 					<span className='title'>{title}</span>
 				</div>
 				:
-				<div className='col-5 vertical_divider px-2'>
+				<div className='col-5 px-2'>
 					<img src={require('../../Images/info_icon.png')} className='info_icon d-block' alt='info' />
 					<span className='title'>{title}</span>
 					<span className='subtitle'>{description}</span>

@@ -13,7 +13,7 @@ const HeaderInfo = ({ time = null, steps = null }) => {
 			</div>
 		</div>
 		<div className='row mt-2'>
-			<div className='large_time_style col-6 pr-4 text-right vertical_divider '>
+			<div className='large_time_style col-6 pr-4 text-right '>
 				{parse(getFormatTime(time))}
 			</div>
 			<div className='large_time_style col-6 pl-4 text-left'>

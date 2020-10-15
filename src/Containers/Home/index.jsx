@@ -6,6 +6,7 @@ import React, {useEffect, useState} from 'react'
 import {getFormattedSeconds} from "../../Utilities/Transform";
 import CustomGoogleMap from "../../Components/CustomGoogleMap";
 import {CARD_TYPES, DATA_1, SAMPLE_DATA_URL} from '../../Utilities/constants'
+import GradientImage from '../../Images/stepLength.png'
 
 const Logo = () => {
 	return <div className='d-flex py-3 justify-content-center border-bottom bg-white'>
@@ -14,11 +15,11 @@ const Logo = () => {
 }
 
 const HeaderInfo = ({metadata}) => {
-	const { seconds, steps, timestamp} = metadata || {}
+	const {seconds, steps, timestamp} = metadata || {}
 	const {formattedTime} = getFormattedSeconds(seconds)
 	return <div className='container-fluid'>
-		<div className='row'>
-			<div className='col-12 col-md-6 col-lg-5 '>
+		<div className='row mt-2'>
+			<div className='col-12 col-md-5 col-lg-4 '>
 				<div className='header_title mt-3 text-center text-md-left'>Walk summary</div>
 				<div className='time_style text-center text-md-left'>
 					{ moment(timestamp).format('dddd,MMMM DD, YYYY hh:mm a') }
@@ -34,15 +35,18 @@ const HeaderInfo = ({metadata}) => {
 }
 
 const StatisticsCard = (props) => {
-	const {title,description}=props||{}
-	return <div className='container-fluid mt-4'>
-		<div className='card_item py-2 row px-0'>
-			<div className='col-5 vertical_divider px-2'>
+	const {title, description, index} = props || {}
+	const marginns = index % 2 === 0 ? {marginRight: 1} : {marginLeft: 1}
+	return <div className='col-12 col-md-6 col-lg-4 mt-3'>
+		<div className='card_item row mx-2 mx-sm-0 bg-white'>
+			<div className='col-5 col-md-12'>
 				<img src={ require('../../Images/info_icon.png') } className='info_icon d-block' alt='info'/>
 				<span className='title'>{ title }</span>
 				<span className='subtitle'>{ description }</span>
 			</div>
-			<div className='col-7 pl-2'>
+			<div className='border-bottom w-100 mt-2 mb-2 mx-2 d-none d-md-inline-block'/>
+			<div className='col-7 col-md-12 pt-lg-2 d-flex justify-content-center align-items-center gradient_border_left'>
+				<div className='gradient_style'/>
 			</div>
 		</div>
 	</div>
@@ -82,26 +86,26 @@ const Home = (props) => {
 	const {cards, metadata} = response || {}
 	return <div className='home_container'>
 		<Logo/>
-		<div className='body_container'>
-			<HeaderInfo metadata={ metadata }/>
-			<div className='px-3'>
-				{ cards?.map((item) => {
-					if (item.template === CARD_TYPES.SIMPLE_CARD) {
-						return <StatisticsCard { ...item }/>
-					}
-					return null
-				}) }
-				{/*<StatisticsCard*/}
-				{/*	icon={ require('../../Images/idea.png') }*/}
-				{/*	title={ INSIGHT.TITLE }*/}
-				{/*	description={ INSIGHT.DESCRIPTION }*/}
-				{/*/>*/}
-				<div className='map_card mt-4 pb-0'>
-					<div className='header_title text-left pl-4 pt-2 pb-2'>Your Route</div>
-					<CustomGoogleMap/>
+		<div className='main_container'>
+			<div className='body_container'>
+				<HeaderInfo metadata={ metadata }/>
+				<div className='container-fluid '>
+					<div className='row'>
+						{ cards?.map((item, index) => {
+							if (item.template === CARD_TYPES.SIMPLE_CARD) {
+								return <StatisticsCard { ...item } index={ index }/>
+							}
+							return null
+						}) }
+					</div>
 				</div>
 			</div>
-			<div className='footer_container'>
+		</div>
+		<div className='footer_container row mx-0 pt-3'>
+			<span className='text-white text-center text-md-left d-inline-block footer_container_title'>
+				Download now and join milions of useres
+			</span>
+			<div className='footer_images_container'>
 				<img src={ require('../../Images/app_store.png') } className='mr-1' alt='info'/>
 				<img src={ require('../../Images/play_store.png') } className='ml-1' alt='info'/>
 			</div>
