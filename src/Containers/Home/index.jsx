@@ -1,47 +1,46 @@
 import './index.scss'
-import React from 'react'
+import {Splash} from '..'
 import moment from "moment";
+import {toast} from 'react-toastify'
+import React, {useEffect, useState} from 'react'
+import {getFormattedSeconds} from "../../Utilities/Transform";
 import CustomGoogleMap from "../../Components/CustomGoogleMap";
-import React from 'react'
-import { useState } from 'react'
-import { useEffect } from 'react'
-import { toast } from 'react-toastify'
-import { Logo, HeaderInfo, StatisticsCard, StoreLogos } from '../../Components'
-import { Splash } from '..'
-import { SAMPLE_DATA_URL, INSIGHT } from '../../Utilities/constants'
-
+import {CARD_TYPES, DATA_1, SAMPLE_DATA_URL} from '../../Utilities/constants'
 
 const Logo = () => {
-	return <div className='d-flex py-3 justify-content-center'>
-		<img src={ require('../../Images/logo.png') } className='logo_style' alt='logo'/>
+	return <div className='d-flex py-3 justify-content-center border-bottom bg-white'>
+		<img src={ require('../../Images/home_logo.png') } className='logo_style' alt='logo'/>
 	</div>
 }
 
-const HeaderInfo = () => {
+const HeaderInfo = ({metadata}) => {
+	const { seconds, steps, timestamp} = metadata || {}
+	const {formattedTime} = getFormattedSeconds(seconds)
 	return <div className='container-fluid'>
 		<div className='row'>
-			<div className='col-12'>
-				<div className='header_title mt-3'>Walk summary</div>
-				<div className='time_style'>{ moment().format('dddd,MMMM DD, YYYY hh:mm a') }</div>
+			<div className='col-12 col-md-6 col-lg-5 '>
+				<div className='header_title mt-3 text-center text-md-left'>Walk summary</div>
+				<div className='time_style text-center text-md-left'>
+					{ moment(timestamp).format('dddd,MMMM DD, YYYY hh:mm a') }
+				</div>
 			</div>
-		</div>
-		<div className='row mt-2'>
-			<div className='large_time_style col-6 pr-4 text-right vertical_divider '>
-				0:30 <sub className='sub_style'>sec</sub>
+			<div className='large_time_style vertical_divider pr-4 text-right col-6 col-md-3 col-lg-2 '>
+				{ formattedTime } <sub className='sub_style'>sec</sub>
 			</div>
-			<div className='large_time_style col-6 pl-4 text-left'>
-				10 <sub className='sub_style'>Steps</sub></div>
+			<div className='large_time_style text-left pl-4 col-6 col-md-3 col-lg-2 '>
+				{ steps } <sub className='sub_style'>steps</sub></div>
 		</div>
 	</div>
 }
 
-const StatisticsCard = () => {
+const StatisticsCard = (props) => {
+	const {title,description}=props||{}
 	return <div className='container-fluid mt-4'>
 		<div className='card_item py-2 row px-0'>
 			<div className='col-5 vertical_divider px-2'>
 				<img src={ require('../../Images/info_icon.png') } className='info_icon d-block' alt='info'/>
-				<span className='title'>Step Rate</span>
-				<span className='subtitle'>8 steps per minute</span>
+				<span className='title'>{ title }</span>
+				<span className='subtitle'>{ description }</span>
 			</div>
 			<div className='col-7 pl-2'>
 			</div>
@@ -51,25 +50,23 @@ const StatisticsCard = () => {
 
 const Home = (props) => {
 	
-	const [showSplash, setSplash] = useState(true)
-	const [response, setResponse] = useState({})
-	const [error, setError] = useState(null)
+	const [ showSplash, setSplash ] = useState(true)
+	const [ response, setResponse ] = useState(DATA_1)
+	const [ error, setError ] = useState(null)
 	useEffect(() => {
+		return setSplash(false)
 		setTimeout(() => {
-			fetch(SAMPLE_DATA_URL, {
-				headers: {
-					'Content-Type': 'application/json',
-				}
-			})
+			fetch(SAMPLE_DATA_URL, {headers: {'Content-Type': 'application/json',}})
 				.then(res => res.json())
 				.then((result) => {
-						setResponse(result)
-						setSplash(false)
-					},
-					({ message = '' }) => {
-						setError(message)
-					}
-				)
+					setResponse(result)
+					setSplash(false)
+				}).catch(({message}) => {
+					setError(message)
+				})
+				.finally(() => {
+					setSplash(false)
+				})
 		}, 1000)
 	}, [])
 	
@@ -79,25 +76,26 @@ const Home = (props) => {
 	}
 	
 	if (showSplash) {
-		return <Splash />
+		return <Splash/>
 	}
 	
+	const {cards, metadata} = response || {}
 	return <div className='home_container'>
 		<Logo/>
 		<div className='body_container'>
-			<div className='divider_style'/>
-			<HeaderInfo/>
+			<HeaderInfo metadata={ metadata }/>
 			<div className='px-3'>
-				<StatisticsCard/>
-				<StatisticsCard/>
-				<StatisticsCard/>
-				<StatisticsCard/>
-				<StatisticsCard/>
-				<StatisticsCard
-					icon={require('../../Images/idea.png')}
-					title={INSIGHT.TITLE}
-					description={INSIGHT.DESCRIPTION}
-				/>
+				{ cards?.map((item) => {
+					if (item.template === CARD_TYPES.SIMPLE_CARD) {
+						return <StatisticsCard { ...item }/>
+					}
+					return null
+				}) }
+				{/*<StatisticsCard*/}
+				{/*	icon={ require('../../Images/idea.png') }*/}
+				{/*	title={ INSIGHT.TITLE }*/}
+				{/*	description={ INSIGHT.DESCRIPTION }*/}
+				{/*/>*/}
 				<div className='map_card mt-4 pb-0'>
 					<div className='header_title text-left pl-4 pt-2 pb-2'>Your Route</div>
 					<CustomGoogleMap/>

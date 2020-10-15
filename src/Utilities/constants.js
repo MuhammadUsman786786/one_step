@@ -79,3 +79,94 @@ export const EXTERNAL_LINKS = {
 	GOOGLE: 'https://play.google.com/store/apps/details?id=com.takeonestep.android',
 	APPLE: 'https://apps.apple.com/il/app/onestep-recovery/id1491372188'
 }
+
+export const CARD_TYPES={
+	SIMPLE_CARD:'simple_card',
+}
+
+export const DATA_1 = {
+	"cards": [
+		{
+			"description": "105 steps/minute",
+			"gait_parameter": "STEP_RATE",
+			"rainbow": {
+				"asset_id": "rainbow_step_rate",
+				"bubble_color": "orange",
+				"bubble_percent": 0.6428571428571429,
+				"end": 130,
+				"start": 60,
+				"template": "rainbow_widget",
+				"units": null,
+				"value": 105,
+				"version": 1
+			},
+			"template": "simple_card",
+			"title": "Step Rate",
+			"version": 1
+		},
+		{
+			"description": "2% toward left leg",
+			"gait_parameter": "SYMMETRY_DIF",
+			"rainbow": {
+				"asset_id": "rainbow_balance",
+				"bubble_color": "green",
+				"bubble_percent": 0.9,
+				"end": 0,
+				"start": -20,
+				"template": "rainbow_widget",
+				"units": "%",
+				"value": -2,
+				"version": 1
+			},
+			"template": "simple_card",
+			"title": "Balance",
+			"version": 1
+		},
+		{
+			"description": "94cm",
+			"gait_parameter": "STRIDE_LENGTH",
+			"rainbow": {
+				"asset_id": "rainbow_stride_length",
+				"bubble_color": "orange",
+				"bubble_percent": 0.6266666666666667,
+				"end": 150,
+				"start": 0,
+				"template": "rainbow_widget",
+				"units": "cm",
+				"value": 94,
+				"version": 1
+			},
+			"template": "simple_card",
+			"title": "Stride Length",
+			"version": 1
+		},
+		{
+			"description": "36° Right hip",
+			"gait_parameter": "STRIDE_LENGTH",
+			"rainbow": {
+				"asset_id": "rainbow_hip_range",
+				"bubble_color": "green",
+				"bubble_percent": 0.72,
+				"end": 50,
+				"start": 0,
+				"template": "rainbow_widget",
+				"units": "°",
+				"value": 36,
+				"version": 1
+			},
+			"template": "simple_card",
+			"title": "Hip Range",
+			"version": 1
+		}
+	],
+	"metadata": {
+		"extraction_level": 8,
+		"seconds": 21,
+		"steps": 16,
+		"timestamp": "2020-09-14T15:15:03",
+		"title": "Walk summary",
+		"uuid": "9af3adeb-d503-47f6-8ec1-bdd60f9138da"
+	},
+	"template": "web_summary",
+	"version": 1
+}
