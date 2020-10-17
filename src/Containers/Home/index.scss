@@ -67,6 +67,26 @@
     color: $light_grey;
     font-weight: 500;
   }
+
+  .idea-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      height: 80px;
+    }
+  }
+
+  .idea-icon-description{
+    display: block;
+    font-size: 1rem;
+    margin-top: 4px;
+    text-align: center;
+    color: $light_grey;
+    font-weight: 500;
+  }
 }
 
 .map_card {
@@ -113,6 +133,10 @@
 
 .footer_images_container {
   margin-bottom: 20px;
+}
+
+.slider-container{
+  position: relative;
 }
 
 @media (max-width: 575.98px) {

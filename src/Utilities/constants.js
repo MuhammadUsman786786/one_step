@@ -71,8 +71,8 @@ export const MAP_API_KEY = "AIzaSyA8La3HotdJflBjZ3gbF89lfqFGzAOybZo"
 export const SAMPLE_DATA_URL = "https://dev.takeonestep.com/api/v3/mockup_calibration_summary"
 
 export const INSIGHT = {
-	TITLE: 'Insight',
-	DESCRIPTION: `Once you finish the "Get to Know Your Walk" course, we will create your personal recovery plan. You will also gain access to digital.`
+	title: 'Insight',
+	description: `Once you finish the "Get to Know Your Walk" course, we will create your personal recovery plan. You will also gain access to digital.`
 }
 
 export const EXTERNAL_LINKS = {

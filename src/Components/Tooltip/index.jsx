@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect } from 'react'
 
-const Tooltip = ({ value = 0, end = 0, bubble_color = '', index}) => {
+const Tooltip = ({ value = 0, bubble_color = '', bubble_percent = 0, index }) => {
 
   useEffect(() => {
     var style = document.createElement("style");
@@ -13,8 +13,7 @@ const Tooltip = ({ value = 0, end = 0, bubble_color = '', index}) => {
     sheet.addRule(`.tip_${index}::before`, `border-color: ${bubble_color} transparent transparent`);
     sheet.insertRule(`.tip_${index}::before { border-color: ${bubble_color} transparent transparent}`, 0)
   }, [])
-
-  const marginLeft = end - value
+  let marginLeft = ((bubble_percent * 100) - 20)
   return <div className={`custom-tooltip tip_${index}`} style={{ marginLeft: `${marginLeft}%`, background: bubble_color }}>
     {value}
   </div>
