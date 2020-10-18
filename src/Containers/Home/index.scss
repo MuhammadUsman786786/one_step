@@ -1,5 +1,10 @@
 @import "../../GlobalStyles/Variable";
 
+.logo_style {
+  height: 40px;
+  object-fit: contain;
+}
+
 .home_container {
   width: 100%;
   height: 100vh;
@@ -79,7 +84,7 @@
     }
   }
 
-  .idea-icon-description{
+  .idea-icon-description {
     display: block;
     font-size: 15.1px;
     margin-top: 4px;
@@ -93,8 +98,8 @@
   -webkit-box-shadow: 0 0 5px 1px rgba(194, 194, 194, 1);
   -moz-box-shadow: 0 0 5px 1px rgba(194, 194, 194, 1);
   box-shadow: 0 0 5px 1px rgba(194, 194, 194, 1);
-  border-radius: 10px;
-  border: 1px solid lightgray;
+  border-radius: 6px;
+  background-color: white;
 }
 
 .sub_style {
@@ -135,7 +140,7 @@
   margin-bottom: 20px;
 }
 
-.slider-container{
+.slider-container {
   position: relative;
 }
 
@@ -163,7 +168,7 @@
   }
 }
 
-.insight_card_item{
+.insight_card_item {
   min-height: 113px;
 }
 
@@ -181,7 +186,7 @@
     height: 15px;
   }
 
-  .insight_card_item{
+  .insight_card_item {
     min-height: 201px;
   }
 }
@@ -196,7 +201,7 @@
     height: 15px;
   }
 
-  .insight_card_item{
+  .insight_card_item {
     min-height: 210px;
   }
 }
@@ -210,7 +215,7 @@
   .gradient_style {
     height: 15px;
   }
-  .insight_card_item{
+  .insight_card_item {
     min-height: 210px;
   }
 }

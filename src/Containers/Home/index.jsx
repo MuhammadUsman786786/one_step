@@ -1,12 +1,11 @@
 import './index.scss'
-import { Splash } from '..'
+import {Splash} from '..'
 import moment from "moment";
-import { toast } from 'react-toastify'
-import React, { useEffect, useState } from 'react'
-import { getFormattedSeconds } from "../../Utilities/Transform";
-import { CustomGoogleMap, Tooltip } from "../../Components";
-import {CARD_TYPES, DATA_1, SAMPLE_DATA_URL, INSIGHT, DATA_2} from '../../Utilities/constants'
-import GradientImage from '../../Images/stepLength.png'
+import {toast} from 'react-toastify'
+import React, {useEffect, useState} from 'react'
+import {getFormattedSeconds} from "../../Utilities/Transform";
+import {Tooltip} from "../../Components";
+import {CARD_TYPES, DATA_2, SAMPLE_DATA_URL} from '../../Utilities/constants'
 import GoogleMapCard from "../../Components/GoogleMap";
 
 const Logo = () => {
@@ -75,6 +74,15 @@ const IdeaIconCard = (props) => {
 	</div>
 }
 
+const MapCard = (props) => {
+	const { title, content } = props || {}
+	return <div className='col-12 col-md-6 col-lg-4 mt-3'>
+		<div className='card_item row mx-2 mx-sm-0 bg-white mb-0 pb-0 mt-0 pt-0'>
+			<GoogleMapCard defaultZoom={10} defaultCenter={{ lat: -34.397, lng: 150.644 }}/>
+		</div>
+	</div>
+}
+
 const Home = (props) => {
 
 	const [showSplash, setSplash] = useState(true)
@@ -119,14 +127,19 @@ const Home = (props) => {
 								return <StatisticsCard {...item} key={index} />
 							}else if(item.template === CARD_TYPES.INSIGHT_CARD){
 								return 	<IdeaIconCard {...item} key={index}/>
+							}else if(item.template === CARD_TYPES.MAP_CARD){
+								return 	<GoogleMapCard
+									{...item}
+									defaultZoom={10}
+									defaultCenter={{ lat: -34.397, lng: 150.644 }}
+									key={index}/>
 							}
 							return null
 						})}
 					</div>
-					<div className="row">
-						<GoogleMapCard defaultZoom={10} defaultCenter={{ lat: -34.397, lng: 150.644 }}>
-						</GoogleMapCard>
-					</div>
+					{/*<div className="row">*/}
+					{/*	<GoogleMapCard defaultZoom={10} defaultCenter={{ lat: -34.397, lng: 150.644 }}/>*/}
+					{/*</div>*/}
 				</div>
 			</div>
 		</div>
