@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect } from 'react'
 
-const Tooltip = ({ value = 0, bubble_color = '', bubble_percent = 0, index }) => {
+const Tooltip = ({ value = 0,units, bubble_color = '', bubble_percent = 0, index }) => {
 
   useEffect(() => {
     var style = document.createElement("style");
@@ -15,7 +15,7 @@ const Tooltip = ({ value = 0, bubble_color = '', bubble_percent = 0, index }) =>
   }, [])
   let marginLeft = ((bubble_percent * 100) - 20)
   return <div className={`custom-tooltip tip_${index}`} style={{ marginLeft: `${marginLeft}%`, background: bubble_color }}>
-    {value}
+    {value} <sub>{ units }</sub>
   </div>
 }
 

@@ -5,8 +5,9 @@ import { toast } from 'react-toastify'
 import React, { useEffect, useState } from 'react'
 import { getFormattedSeconds } from "../../Utilities/Transform";
 import { CustomGoogleMap, Tooltip } from "../../Components";
-import { CARD_TYPES, DATA_1, SAMPLE_DATA_URL, INSIGHT } from '../../Utilities/constants'
+import {CARD_TYPES, DATA_1, SAMPLE_DATA_URL, INSIGHT, DATA_2} from '../../Utilities/constants'
 import GradientImage from '../../Images/stepLength.png'
+import GoogleMapCard from "../../Components/GoogleMap";
 
 const Logo = () => {
 	return <div className='d-flex py-3 justify-content-center border-bottom bg-white'>
@@ -36,7 +37,6 @@ const HeaderInfo = ({ metadata }) => {
 
 const StatisticsCard = (props) => {
 	const { title, description, index, rainbow } = props || {}
-	const marginns = index % 2 === 0 ? { marginRight: 1 } : { marginLeft: 1 }
 	return <div className='col-12 col-md-6 col-lg-4 mt-3'>
 		<div className='card_item row mx-2 mx-sm-0 bg-white'>
 			<div className='col-5 col-md-12'>
@@ -48,9 +48,11 @@ const StatisticsCard = (props) => {
 			<div className='slider-container col-7 col-md-12 pt-lg-2 d-flex flex-column justify-content-end gradient_border_left px-2 px-md-3'>
 				<Tooltip {...rainbow} index={index} />
 				<div className="d-flex">
-					<span>{rainbow?.start}</span>
 					<div className='gradient_style' />
-					<span>{rainbow?.end}</span>
+				</div>
+				<div className='d-flex justify-content-between'>
+					<span className='subtitle'>{rainbow?.start}</span>
+					<span className='subtitle'>{rainbow?.end}</span>
 				</div>
 			</div>
 		</div>
@@ -58,16 +60,16 @@ const StatisticsCard = (props) => {
 }
 
 const IdeaIconCard = (props) => {
-	const { title, description } = props || {}
+	const { title, content } = props || {}
 	return <div className='col-12 col-md-6 col-lg-4 mt-3'>
-		<div className='card_item row mx-2 mx-sm-0 bg-white'>
+		<div className='card_item row mx-2 mx-sm-0 bg-white insight_card_item'>
 			<div className='col-5 col-md-12 idea-icon'>
 				<img src={require('../../Images/idea.png')} className='d-block' alt='info' />
 				<span className='title'>{title}</span>
 			</div>
 			<div className='border-bottom w-100 mt-2 mb-2 mx-2 d-none d-md-inline-block' />
 			<div className='col-7 col-md-12 pt-lg-2 align-self-center gradient_border_left px-3'>
-				<span className='idea-icon-description'>{description}</span>
+				<span className='idea-icon-description'>{content}</span>
 			</div>
 		</div>
 	</div>
@@ -76,7 +78,7 @@ const IdeaIconCard = (props) => {
 const Home = (props) => {
 
 	const [showSplash, setSplash] = useState(true)
-	const [response, setResponse] = useState(DATA_1)
+	const [response, setResponse] = useState(DATA_2)
 	const [error, setError] = useState(null)
 	useEffect(() => {
 		return setSplash(false)
@@ -104,7 +106,7 @@ const Home = (props) => {
 		return <Splash />
 	}
 
-	const { cards, metadata } = response || {}
+	const { cards, metadata } = response?.summary || {}
 	return <div className='home_container'>
 		<Logo />
 		<div className='main_container'>
@@ -114,19 +116,16 @@ const Home = (props) => {
 					<div className='row'>
 						{cards?.map((item, index) => {
 							if (item.template === CARD_TYPES.SIMPLE_CARD) {
-								return <StatisticsCard {...item} index={index} />
+								return <StatisticsCard {...item} key={index} />
+							}else if(item.template === CARD_TYPES.INSIGHT_CARD){
+								return 	<IdeaIconCard {...item} key={index}/>
 							}
 							return null
 						})}
-						<IdeaIconCard {...INSIGHT} />
 					</div>
 					<div className="row">
-						<CustomGoogleMap
-							defaultZoom={10}
-							defaultCenter={{ lat: -34.397, lng: 150.644 }}
-						>
-
-						</CustomGoogleMap>
+						<GoogleMapCard defaultZoom={10} defaultCenter={{ lat: -34.397, lng: 150.644 }}>
+						</GoogleMapCard>
 					</div>
 				</div>
 			</div>

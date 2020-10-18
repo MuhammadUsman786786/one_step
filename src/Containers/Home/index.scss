@@ -75,13 +75,13 @@
     align-items: center;
 
     img {
-      height: 80px;
+      height: 40px;
     }
   }
 
   .idea-icon-description{
     display: block;
-    font-size: 1rem;
+    font-size: 15.1px;
     margin-top: 4px;
     text-align: center;
     color: $light_grey;
@@ -163,6 +163,10 @@
   }
 }
 
+.insight_card_item{
+  min-height: 113px;
+}
+
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) and (max-width: 991.98px) {
   .body_container {
@@ -176,6 +180,10 @@
   .gradient_style {
     height: 15px;
   }
+
+  .insight_card_item{
+    min-height: 201px;
+  }
 }
 
 // Large devices (desktops, 992px and up)
@@ -187,6 +195,10 @@
   .gradient_style {
     height: 15px;
   }
+
+  .insight_card_item{
+    min-height: 210px;
+  }
 }
 
 // Extra large devices (large desktops, 1200px and up)
@@ -197,6 +209,9 @@
   }
   .gradient_style {
     height: 15px;
+  }
+  .insight_card_item{
+    min-height: 210px;
   }
 }
 

@@ -80,8 +80,9 @@ export const EXTERNAL_LINKS = {
 	APPLE: 'https://apps.apple.com/il/app/onestep-recovery/id1491372188'
 }
 
-export const CARD_TYPES={
-	SIMPLE_CARD:'simple_card',
+export const CARD_TYPES = {
+	SIMPLE_CARD: 'simple_card',
+	INSIGHT_CARD: 'insight_card',
 }
 
 export const DATA_1 = {
@@ -169,4 +170,88 @@ export const DATA_1 = {
 	},
 	"template": "web_summary",
 	"version": 1
+}
+
+export const DATA_2 = {
+	"summary": {
+		"cards": [
+			{
+				"description": "146 steps/minute",
+				"gait_parameter": "STEP_RATE",
+				"rainbow": {
+					"asset_id": "rainbow_step_rate",
+					"bubble_color": "green",
+					"bubble_percent": 1,
+					"end": 130,
+					"start": 60,
+					"template": "rainbow_widget",
+					"units": null,
+					"value": 146,
+					"version": 1
+				},
+				"template": "simple_card",
+				"title": "Step Rate",
+				"version": 1
+			},
+			{
+				"description": "135 steps/minute",
+				"gait_parameter": "STEP_RATE",
+				"rainbow": {
+					"asset_id": "rainbow_step_rate",
+					"bubble_color": "green",
+					"bubble_percent": 1,
+					"end": 130,
+					"start": 60,
+					"template": "rainbow_widget",
+					"units": null,
+					"value": 135,
+					"version": 1
+				},
+				"template": "simple_card",
+				"title": "Step Rate",
+				"version": 1
+			},
+			{
+				"description": "135 steps/minute",
+				"gait_parameter": "STEP_RATE",
+				"rainbow": {
+					"asset_id": "rainbow_step_rate",
+					"bubble_color": "green",
+					"bubble_percent": 1,
+					"end": 130,
+					"start": 60,
+					"template": "rainbow_widget",
+					"units": null,
+					"value": 135,
+					"version": 1
+				},
+				"template": "simple_card",
+				"title": "Step Rate",
+				"version": 1
+			},
+			{
+				"content": "The notorious T-Rex is thought to have had a step rate of 84 steps per minute!",
+				"template": "insight_card",
+				"title": "Step rate fact!",
+				"version": 1
+			},
+			{
+				"events": [],
+				"latitude": 32.0646091,
+				"longitude": 34.7717146,
+				"template": "map_card",
+				"version": 1
+			}
+		],
+		"metadata": {
+			"extraction_level": 4,
+			"seconds": 7,
+			"steps": 12,
+			"timestamp": "2020-10-12T10:23:34",
+			"title": "Walk summary",
+			"uuid": "1435cbd5-73bb-4007-93f7-cf85d0f6cfcc"
+		},
+		"template": "web_summary",
+		"version": 1
+	}
 }
