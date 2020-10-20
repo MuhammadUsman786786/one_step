@@ -14,6 +14,13 @@ export const CARD_TYPES = {
 	MAP_CARD: 'map_card',
 }
 
+export const IMAGES_MAP={
+	rainbow_balance:require('./../Images/gradient/rainbow_balance.png'),
+	rainbow_hip_range:require('./../Images/gradient/rainbow_hip_range.png'),
+	rainbow_step_rate:require('./../Images/gradient/rainbow_step_rate.png'),
+	rainbow_stride_length:require('./../Images/gradient/rainbow_stride_length.png'),
+}
+
 export const DATA_2 = {
 	"summary": {
 		"cards": [ {

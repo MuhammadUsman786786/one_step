@@ -7,7 +7,7 @@ import {Tooltip} from "../../Components";
 import React, {useEffect, useState} from 'react'
 import GoogleMapCard from "../../Components/GoogleMap";
 import {getFormattedSeconds} from "../../Utilities/Transform";
-import {ANDROID_APP_LINK, API_BASE_URL, CARD_TYPES, DATA_2, IOS_APP_LINK} from '../../Utilities/constants'
+import {ANDROID_APP_LINK, API_BASE_URL, CARD_TYPES, DATA_2, IMAGES_MAP, IOS_APP_LINK} from '../../Utilities/constants'
 
 const Logo = () => {
 	return <div className='d-flex py-3 justify-content-center border-bottom bg-white'>
@@ -36,7 +36,9 @@ const HeaderInfo = ({metadata}) => {
 }
 
 const StatisticsCard = (props) => {
-	const {title, description, index, rainbow} = props || {}
+	const {title, description, index, rainbow,asset_id} = props || {}
+	console.log(props)
+	const src=IMAGES_MAP[asset_id]
 	return <div className='col-12 col-md-6 col-lg-4 mt-3'>
 		<div className='card_item row mx-2 mx-sm-0 bg-white'>
 			<div className='col-5 col-md-12'>
@@ -49,7 +51,7 @@ const StatisticsCard = (props) => {
 				className='slider-container col-7 col-md-12 pt-lg-2 d-flex flex-column justify-content-end gradient_border_left px-2 px-md-3'>
 				<Tooltip { ...rainbow } index={ index }/>
 				<div className="d-flex">
-					<img src={ require('../../Images/gradient/stepRate.png') } className='gradient_style'/>
+					<img src={ src } className='gradient_style'/>
 				</div>
 				<div className='d-flex justify-content-between'>
 					<span className='subtitle'>{ rainbow?.start }</span>
@@ -140,11 +142,11 @@ const Home = (props) => {
 				</span>
 			</span>
 			<div className='footer_images_container'>
-				<a target="_blank" href={ IOS_APP_LINK }>
-					<img src={ require('../../Images/app_store.png') } className='mr-1' alt='info'/>
-				</a>
 				<a target="_blank" href={ ANDROID_APP_LINK }>
-					<img src={ require('../../Images/play_store.png') } className='ml-1' alt='info'/>
+					<img src={ require('../../Images/play_store.png') } className='mr-1' alt='info'/>
+				</a>
+				<a target="_blank" href={ IOS_APP_LINK }>
+					<img src={ require('../../Images/app_store.png') } className='ml-1' alt='info'/>
 				</a>
 			</div>
 		</div>
