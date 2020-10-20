@@ -80,12 +80,11 @@ const IdeaIconCard = (props) => {
 
 const Home = (props) => {
 	const [ showSplash, setSplash ] = useState(true)
-	const [ response, setResponse ] = useState(DATA_2)
+	const [ response, setResponse ] = useState({})
 	const [ error, setError ] = useState(null)
 	useEffect(() => {
-		return setSplash(false)
 		setTimeout(() => {setSplash(false)}, 1000)
-		fetch(`${ API_BASE_URL }/c81aa6d8-dddb-40c8-a6ed-5aa318d721c0`,
+		fetch(`${ API_BASE_URL }/d42aa697-4ded-492b-b2c0-786295dd78ea`,
 			{headers: {'Content-Type': 'application/json',}})
 			.then(res => res.json())
 			.then((result) => {
