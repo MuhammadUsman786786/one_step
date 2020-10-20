@@ -1,9 +1,28 @@
 import React from "react";
 import {compose, withProps} from "recompose";
-import {GoogleMap, withGoogleMap, withScriptjs} from "react-google-maps";
+import {GoogleMap, Marker, Polyline, withGoogleMap, withScriptjs} from "react-google-maps";
 import * as _ from 'lodash'
 import {MAP_API_KEY} from '../../Utilities/constants'
 import './index.scss'
+
+
+const DEFAULT_LAT = 32.0647512
+const DEFAULT_LNG = 34.7716747
+
+const CustomMarker = (props) => {
+	const {location, icon} = props || {}
+	// eslint-disable-next-line no-undef
+	const scaledSize = new google.maps.Size(40, 40);
+	return <Marker icon={ {url: icon, scaledSize} } position={ location }>
+	</Marker>
+}
+
+const Directions = (props) => {
+	const {dataList} = props || {}
+	const reformattedList = dataList.map(item => ({lat: item.latitude, lng: item.longitude}))
+	return <Polyline path={ reformattedList }/>
+}
+
 
 const CustomGoogleMap = compose(
 	withProps({
@@ -21,26 +40,36 @@ const CustomGoogleMap = compose(
 	withScriptjs,
 	withGoogleMap
 )(props => {
+	const {isDirections,events, defaultCenter = {}} = props || {}
+	const center = {lat: DEFAULT_LAT, lng: DEFAULT_LNG, ...defaultCenter || {}}
+	
+	if(isDirections){
+		center.lat=events[0].latitude
+		center.lng=events[0].longitude
+	}
 	return <GoogleMap
-		defaultZoom={ props?.defaultZoom }
-		defaultCenter={ props?.defaultCenter }
-	>
-		{ props?.children }
+		defaultZoom={ props?.defaultZoom || 18 }
+		defaultCenter={ center }>
+		{ isDirections ?
+			<Directions dataList={ events }/>:
+			<CustomMarker location={ center } icon={ require('../../Images/marker.png') }/> }
 	</GoogleMap>
 });
 
 const GoogleMapCard = (props) => {
-	const {title} = props || {}
-	const className=_.isEmpty(title)?'map-inner-item':'map-inner-item1'
+	const {events} = props || {}
+	const isDirections = _.isArray(events) && _.size(events) > 2
+	const title=isDirections?'Route':'Location'
+	const className = _.isEmpty(title) ? 'map-inner-item' : 'map-inner-item1'
 	return <div className='col-12 col-md-6 col-lg-4 mt-3 px-4 px-sm-3'>
 		<div className='map_card'>
-			{!_.isEmpty(title)&&<div className="map-title">{ title }</div>}
-			<div className={`px-0 mx-0 mb-0 pb-0 position-relative ${className}`}>
+			{ !_.isEmpty(title) && <div className="map-title">{ title }</div> }
+			<div className={ `px-0 mx-0 mb-0 pb-0 position-relative ${ className }` }>
 				<CustomGoogleMap
 					defaultZoom={ props?.defaultZoom }
-					defaultCenter={ props?.defaultCenter }>
-					{ props?.children }
-				</CustomGoogleMap>
+					defaultCenter={ props?.defaultCenter }
+					events={ props?.events }
+					isDirections={isDirections}/>
 			</div>
 		</div>
 	</div>
