@@ -4,10 +4,11 @@ import moment from "moment";
 import * as _ from 'lodash'
 import {toast} from 'react-toastify'
 import {Tooltip} from "../../Components";
-import React, {useEffect, useState} from 'react'
+import {useParams} from 'react-router-dom'
 import GoogleMapCard from "../../Components/GoogleMap";
+import React, {Fragment, useEffect, useState} from 'react'
 import {getFormattedSeconds} from "../../Utilities/Transform";
-import {ANDROID_APP_LINK, API_BASE_URL, CARD_TYPES, DATA_2, IMAGES_MAP, IOS_APP_LINK} from '../../Utilities/constants'
+import {ANDROID_APP_LINK, API_BASE_URL, CARD_TYPES, IMAGES_MAP, IOS_APP_LINK} from '../../Utilities/constants'
 
 const Logo = () => {
 	return <div className='d-flex py-3 justify-content-center border-bottom bg-white'>
@@ -37,7 +38,6 @@ const HeaderInfo = ({metadata}) => {
 
 const StatisticsCard = (props) => {
 	const {title, description, index, rainbow,asset_id} = props || {}
-	console.log(props)
 	const src=IMAGES_MAP[asset_id]
 	return <div className='col-12 col-md-6 col-lg-4 mt-3'>
 		<div className='card_item row mx-2 mx-sm-0 bg-white'>
@@ -79,28 +79,28 @@ const IdeaIconCard = (props) => {
 }
 
 const Home = (props) => {
-	const [ showSplash, setSplash ] = useState(true)
+	const [ showSplash, setSplash ] = useState(false)
+	const [ isLoading, setLoading ] = useState(true)
 	const [ response, setResponse ] = useState({})
-	const [ error, setError ] = useState(null)
+	const {id}=useParams()
 	useEffect(() => {
 		setTimeout(() => {setSplash(false)}, 1000)
-		fetch(`${ API_BASE_URL }/d42aa697-4ded-492b-b2c0-786295dd78ea`,
+		setLoading(true)
+		fetch(`${ API_BASE_URL }/${id}`,
 			{headers: {'Content-Type': 'application/json',}})
 			.then(res => res.json())
 			.then((result) => {
 				setResponse(result)
 			}).catch(({message}) => {
-				setError(message)
+				toast.error('Error is found')
 			})
 			.finally(() => {
+				setLoading(false)
 			})
 		
 	}, [])
 	
 	
-	if (error) {
-		toast.error(error)
-	}
 	
 	if (showSplash) {
 		return <Splash/>
@@ -110,28 +110,35 @@ const Home = (props) => {
 	return <div className='home_container'>
 		<Logo/>
 		<div className='main_container'>
-			{!_.isEmpty(response)&&
 			<div className='body_container'>
-				<HeaderInfo metadata={ metadata }/>
-				<div className='container-fluid '>
-					<div className='row'>
-						{ cards?.map((item, index) => {
-							if (item.template === CARD_TYPES.SIMPLE_CARD) {
-								return <StatisticsCard { ...item } key={ index }/>
-							} else if (item.template === CARD_TYPES.INSIGHT_CARD) {
-								return <IdeaIconCard { ...item } key={ index }/>
-							} else if (item.template === CARD_TYPES.MAP_CARD) {
-								return <GoogleMapCard
-									{ ...item }
-									defaultCenter={ {lat: -34.397, lng: 150.644} }
-									key={ index }/>
-							}
-							return null
-						}) }
-					</div>
+				{isLoading&&
+				<div className='d-flex justify-content-center mt-3'>
+					<div className="spinner-border text-danger" role="status"><span className="sr-only"/></div>
 				</div>
-			</div>
+				}
+			{!_.isEmpty(response)&&
+				<Fragment>
+					<HeaderInfo metadata={ metadata }/>
+					<div className='container-fluid '>
+						<div className='row'>
+							{ cards?.map((item, index) => {
+								if (item.template === CARD_TYPES.SIMPLE_CARD) {
+									return <StatisticsCard { ...item } key={ index }/>
+								} else if (item.template === CARD_TYPES.INSIGHT_CARD) {
+									return <IdeaIconCard { ...item } key={ index }/>
+								} else if (item.template === CARD_TYPES.MAP_CARD) {
+									return <GoogleMapCard
+										{ ...item }
+										defaultCenter={ {lat: -34.397, lng: 150.644} }
+										key={ index }/>
+								}
+								return null
+							}) }
+						</div>
+					</div>
+				</Fragment>
 			}
+			</div>
 		</div>
 		<div className='footer_container row mx-0 pt-3'>
 			<span className='text-white text-center text-md-left d-inline-block font-weight-bold footer_container_title'>

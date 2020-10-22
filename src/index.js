@@ -12,7 +12,7 @@ ReactDOM.render(
 	<React.Fragment>
 		<App/>
 		<ToastContainer
-      position="top-left"
+      position="top-right"
       autoClose={3000}
       hideProgressBar
       newestOnTop={false}
