@@ -57,7 +57,15 @@ export const DATA_2 = {
 			"template": "simple_card",
 			"title": "Balance",
 			"version": 1
-		}, {
+		},
+			
+			{
+				"content": "content content content content content ",
+				"template": "insight_card",
+				"title": "Hip Range",
+				"version": 1
+			},
+			{
 			"description": "143cm",
 			"gait_parameter": "STRIDE_LENGTH",
 			"rainbow": {
@@ -185,7 +193,9 @@ export const DATA_2 = {
 			"longitude": 34.7716747,
 			"template": "map_card",
 			"version": 1
-		} ],
+		}
+		
+		],
 		"metadata": {
 			"extraction_level": 8,
 			"seconds": 240,

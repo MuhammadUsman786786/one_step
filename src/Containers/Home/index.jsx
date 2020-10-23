@@ -8,7 +8,7 @@ import {useParams} from 'react-router-dom'
 import GoogleMapCard from "../../Components/GoogleMap";
 import React, {Fragment, useEffect, useState} from 'react'
 import {getFormattedSeconds} from "../../Utilities/Transform";
-import {ANDROID_APP_LINK, API_BASE_URL, CARD_TYPES, IMAGES_MAP, IOS_APP_LINK} from '../../Utilities/constants'
+import {ANDROID_APP_LINK, API_BASE_URL, CARD_TYPES, DATA_2, IMAGES_MAP, IOS_APP_LINK} from '../../Utilities/constants'
 
 const Logo = () => {
 	return <div className='d-flex py-3 justify-content-center border-bottom bg-white'>
@@ -18,17 +18,17 @@ const Logo = () => {
 
 const HeaderInfo = ({metadata}) => {
 	const {seconds, steps, timestamp} = metadata || {}
-	const {formattedTime} = getFormattedSeconds(seconds)
+	const {formattedTime,unit} = getFormattedSeconds(seconds)
 	return <div className='container-fluid'>
 		<div className='row mt-2'>
 			<div className='col-12 col-md-5 col-lg-4 '>
 				<div className='header_title mt-3 text-center text-md-left'>Walk summary</div>
 				<div className='time_style text-center text-md-left'>
-					{ moment(timestamp).format('dddd,MMMM DD, YYYY hh:mm a') }
+					{ moment.utc(timestamp).local().format('dddd,MMMM DD, YYYY hh:mm a') }
 				</div>
 			</div>
 			<div className='large_time_style vertical_divider pr-4 text-right col-6 col-md-3 col-lg-2 '>
-				{ formattedTime } <sub className='sub_style'>sec</sub>
+				{ formattedTime } <sub className='sub_style'>{ unit }</sub>
 			</div>
 			<div className='large_time_style text-left pl-4 col-6 col-md-3 col-lg-2 '>
 				{ steps } <sub className='sub_style'>steps</sub></div>
@@ -40,9 +40,8 @@ const StatisticsCard = (props) => {
 	const {title, description, index, rainbow,asset_id} = props || {}
 	const src=IMAGES_MAP[asset_id]
 	return <div className='col-12 col-md-6 col-lg-4 mt-3'>
-		<div className='card_item row mx-2 mx-sm-0 bg-white'>
+		<div className='card_item row mx-2 mx-sm-0 bg-white pt-3 pb-4'>
 			<div className='col-5 col-md-12'>
-				<img src={ require('../../Images/info_icon.png') } className='info_icon d-block' alt='info'/>
 				<span className='title'>{ title }</span>
 				<span className='subtitle'>{ description }</span>
 			</div>
@@ -68,10 +67,11 @@ const IdeaIconCard = (props) => {
 		<div className='card_item row mx-2 mx-sm-0 bg-white insight_card_item'>
 			<div className='col-5 col-md-12 idea-icon'>
 				<img src={ require('../../Images/idea.png') } className='d-block' alt='info'/>
-				<span className='title'>{ title }</span>
+				<span className='title'>Insight</span>
 			</div>
-			<div className='border-bottom w-100 mt-2 mb-2 mx-2 d-none d-md-inline-block'/>
+			<div className='border-bottom w-100  mt-2 mb-2 mx-2 d-none d-md-inline-block'/>
 			<div className='col-7 col-md-12 pt-lg-2 align-self-center gradient_border_left px-3'>
+				<span className='title mt-0'>{ title }</span>
 				<span className='idea-icon-description'>{ content }</span>
 			</div>
 		</div>
