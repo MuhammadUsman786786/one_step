@@ -40,36 +40,39 @@ const CustomGoogleMap = compose(
 	withScriptjs,
 	withGoogleMap
 )(props => {
-	const {isDirections,events, defaultCenter = {}} = props || {}
-	const center = {lat: DEFAULT_LAT, lng: DEFAULT_LNG, ...defaultCenter || {}}
+	const {isDirections, events, defaultCenter = {}} = props || {}
+	const center = {
+		lat: defaultCenter?.lat || DEFAULT_LAT,
+		lng: defaultCenter?.lng || DEFAULT_LNG
+	}
 	
-	if(isDirections){
-		center.lat=events[0].latitude
-		center.lng=events[0].longitude
+	if (isDirections) {
+		center.lat = events?.[0]?.latitude
+		center.lng = events?.[0]?.longitude
 	}
 	return <GoogleMap
 		defaultZoom={ props?.defaultZoom || 18 }
 		defaultCenter={ center }>
 		{ isDirections ?
-			<Directions dataList={ events }/>:
+			<Directions dataList={ events }/> :
 			<CustomMarker location={ center } icon={ require('../../Images/marker.png') }/> }
 	</GoogleMap>
 });
 
 const GoogleMapCard = (props) => {
-	const {events} = props || {}
+	const {events, latitude, longitude} = props || {}
 	const isDirections = _.isArray(events) && _.size(events) > 2
-	const title=isDirections?'Route':'Location'
+	const title = isDirections ? 'Route' : 'Location'
 	const className = _.isEmpty(title) ? 'map-inner-item' : 'map-inner-item1'
 	return <div className='col-12 col-md-6 col-lg-4 mt-3 px-4 px-sm-3'>
 		<div className='map_card'>
 			{ !_.isEmpty(title) && <div className="map-title">{ title }</div> }
 			<div className={ `px-0 mx-0 mb-0 pb-0 position-relative ${ className }` }>
 				<CustomGoogleMap
+					events={ props?.events ||[] }
 					defaultZoom={ props?.defaultZoom }
-					defaultCenter={ props?.defaultCenter }
-					events={ props?.events }
-					isDirections={isDirections}/>
+					defaultCenter={ {lat: latitude, lng: longitude} }
+					isDirections={ isDirections }/>
 			</div>
 		</div>
 	</div>

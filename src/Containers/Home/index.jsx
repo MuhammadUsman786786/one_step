@@ -80,11 +80,14 @@ const IdeaIconCard = (props) => {
 
 const Home = (props) => {
 	const [ showSplash, setSplash ] = useState(false)
-	const [ isLoading, setLoading ] = useState(true)
+	const [ isLoading, setLoading ] = useState(false)
 	const [ response, setResponse ] = useState({})
 	const {id}=useParams()
 	useEffect(() => {
 		setTimeout(() => {setSplash(false)}, 1000)
+		if(_.isEmpty(id)){
+			return
+		}
 		setLoading(true)
 		fetch(`${ API_BASE_URL }/${id}`,
 			{headers: {'Content-Type': 'application/json',}})
@@ -127,10 +130,7 @@ const Home = (props) => {
 								} else if (item.template === CARD_TYPES.INSIGHT_CARD) {
 									return <IdeaIconCard { ...item } key={ index }/>
 								} else if (item.template === CARD_TYPES.MAP_CARD) {
-									return <GoogleMapCard
-										{ ...item }
-										defaultCenter={ {lat: -34.397, lng: 150.644} }
-										key={ index }/>
+									return <GoogleMapCard{ ...item } key={ index }/>
 								}
 								return null
 							}) }
